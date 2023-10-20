@@ -35,8 +35,8 @@
         <div class="center-container">
             <h1>Archive Creation</h1>
             <input type="file" bind:files multiple />
-            <input type="text" bind:value={fileName} placeholder="File name" aria-label="Text" />
-            <button on:click={uploadFiles}>Upload Files</button>
+            <input id="fileName" type="text" bind:value={fileName} placeholder="File name" aria-label="Text" />
+            <button on:click={uploadFiles}>Upload</button>
         </div>
     </div>
 {/if}
@@ -50,9 +50,17 @@
         align-items: center;
     }
     .center-container h1{
-        font-size: 4rem;
+        font-size: 2.5rem;
+    }
+    .center-container {
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    #fileName {
+        width: fit-content;
     }
     button {
-        width: 100%;
+        width: fit-content;
     }
 </style>
