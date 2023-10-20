@@ -1,7 +1,7 @@
 <script>
 	import axios from 'axios';
 	import '@picocss/pico';
-
+    import '../app.css'
 	let files;
     let loading = false;
 	async function uploadFiles() {
