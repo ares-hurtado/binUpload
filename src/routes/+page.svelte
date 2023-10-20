@@ -1,17 +1,44 @@
 <script>
-    import '@picocss/pico'
-    import '../app.css'
+	import axios from 'axios';
+	import '@picocss/pico';
+
+	let files;
+    let loading = false;
+	async function uploadFiles() {
+        loading = true;
+		const formData = new FormData();
+		for (let i = 0; i < files.length; i++) {
+			formData.append('files', files[i]);
+		}
+		try {
+			const response = await axios.post('https://pumped-tarpon-promptly.ngrok-free.app/archive', formData);
+			console.log(response.data); // signedURL that triggers download.
+            loading = false
+            window.open(response.data, '_blank');
+		} catch (error) {
+			console.error('Error uploading files:', error);
+		}
+	}
 </script>
 
+{#if loading}
 <div class="main-container">
-    <div class="center-container">
-        <h1>Archive Creation</h1>
-        <form action="https://pumped-tarpon-promptly.ngrok-free.app/archive" method="POST" enctype="multipart/form-data">
-            <input type="file" name="files" multiple>
-            <button type="submit">Upload</button>
-        </form>
-    </div>
+	<div class="center-container">
+		<h1>Archive Creation</h1>
+		<a href="/" aria-busy="true">Creating Archive.zip</a>
+	</div>
 </div>
+
+{:else}
+    <div class="main-container">
+        <div class="center-container">
+            <h1>Archive Creation</h1>
+            <input type="file" bind:files multiple />
+            <button on:click={uploadFiles}>Upload Files</button>
+        </div>
+    </div>
+{/if}
+
 
 <style>
     .main-container {
