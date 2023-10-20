@@ -3,6 +3,7 @@
 	import '@picocss/pico';
     import '../app.css'
 	let files;
+    let fileName;
     let loading = false;
 	async function uploadFiles() {
         loading = true;
@@ -11,7 +12,7 @@
 			formData.append('files', files[i]);
 		}
 		try {
-			const response = await axios.post('https://pumped-tarpon-promptly.ngrok-free.app/archive', formData);
+			const response = await axios.post(`https://pumped-tarpon-promptly.ngrok-free.app/archive/${fileName}`, formData);
 			console.log(response.data); // signedURL that triggers download.
             loading = false
             window.open(response.data, '_blank');
@@ -34,6 +35,7 @@
         <div class="center-container">
             <h1>Archive Creation</h1>
             <input type="file" bind:files multiple />
+            <input type="text" bind:value={fileName} placeholder="File name" aria-label="Text" />
             <button on:click={uploadFiles}>Upload Files</button>
         </div>
     </div>
